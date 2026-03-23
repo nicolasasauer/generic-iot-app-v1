@@ -1,0 +1,47 @@
+name: iot_app
+description: A comprehensive Flutter IoT application for ESP32 BLE connectivity with modular dashboard widgets.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # BLE connectivity
+  flutter_blue_plus: ^1.31.15
+  
+  # State management
+  riverpod: ^2.4.9
+  flutter_riverpod: ^2.4.9
+  hooks_riverpod: ^2.4.9
+  
+  # Charts and visualization
+  fl_chart: ^0.65.0
+  
+  # Persistence
+  shared_preferences: ^2.2.2
+  
+  # Utilities
+  uuid: ^4.3.3
+  csv: ^6.0.0
+  path_provider: ^2.1.2
+  permission_handler: ^11.3.0
+  
+  # Serialization
+  json_annotation: ^4.8.1
+  freezed_annotation: ^2.4.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  mockito: ^5.4.4
+  build_runner: ^2.4.8
+  json_serializable: ^6.7.1
+  freezed: ^2.4.7
+
+flutter:
+  uses-material-design: true
