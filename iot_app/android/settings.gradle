@@ -5,7 +5,6 @@ pluginManagement {
         if (propertiesFile.exists()) {
             propertiesFile.withInputStream { properties.load(it) }
         }
-        // Erst in local.properties schauen, dann in den System-Umgebungsvariablen
         def path = properties.getProperty("flutter.sdk") ?: System.getenv("FLUTTER_ROOT")
         if (path == null) {
             throw new GradleException("Flutter SDK not found. Define flutter.sdk in local.properties or FLUTTER_ROOT env var.")
