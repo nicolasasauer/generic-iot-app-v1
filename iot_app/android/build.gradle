@@ -10,35 +10,10 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 
-// Dieser Teil ist das "Sicherheitsnetz" für flutter_blue_plus
 subprojects {
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
-            // Wir gaukeln dem Plugin vor, es gäbe die alte Flutter-Extension
-            if (!project.android.hasProperty('flutter')) {
-                project.android.extensions.add('flutter', [
-                    compileSdkVersion: 34,
-                    minSdkVersion: 21,
-                    targetSdkVersion: 34
-                ])
-            }
-            project.android {
-                compileSdkVersion 34
-                buildToolsVersion "34.0.0"
-                defaultConfig {
-                    minSdkVersion 21
-                    targetSdkVersion 34
-                }
-            }
-        }
-    }
-}
-
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
-}
-        if (project.hasProperty('android')) {
-            // Wir injizieren die fehlende "flutter" Extension in jedes Plugin
+            // Fix für flutter_blue_plus (injiziert die 'flutter' Eigenschaft)
             if (!project.android.hasProperty('flutter')) {
                 project.android.extensions.add('flutter', [
                     compileSdkVersion: 34,
