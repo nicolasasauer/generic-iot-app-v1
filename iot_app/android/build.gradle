@@ -27,3 +27,21 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            project.android {
+                // Dies erzwingt die Versionen für ALLE Plugins, 
+                // auch wenn sie diese selbst nicht finden können.
+                compileSdkVersion 34
+                buildToolsVersion "34.0.0"
+
+                defaultConfig {
+                    minSdkVersion 21
+                    targetSdkVersion 34
+                }
+            }
+        }
+    }
+}
