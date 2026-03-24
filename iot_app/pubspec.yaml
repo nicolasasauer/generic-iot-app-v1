@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   
   # BLE connectivity
-  flutter_blue_plus: ^1.31.15
+  flutter_blue_plus: ^1.32.12
   
   # State management
   riverpod: ^2.4.9
