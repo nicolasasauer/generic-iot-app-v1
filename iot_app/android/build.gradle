@@ -1,24 +1,3 @@
-// 1. DIESER BLOCK FIXT DEN "unknown property 'flutter'" FEHLER
-allprojects {
-    ext.flutter = [
-        compileSdkVersion: 34,
-        minSdkVersion: 21,
-        targetSdkVersion: 34
-    ]
-}
-
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        // Wir nutzen 7.4.2, um den "OutputFile" Fehler in CI zu vermeiden
-        classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10'
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -31,9 +10,33 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 
-// 2. DIESER BLOCK FIXT DEN "compileSdkVersion is not specified" FEHLER
+// Dieser Teil ist das "Sicherheitsnetz" für flutter_blue_plus
 subprojects {
     afterEvaluate { project ->
+        if (project.hasProperty('android')) {
+            // Wir gaukeln dem Plugin vor, es gäbe die alte Flutter-Extension
+            if (!project.android.hasProperty('flutter')) {
+                project.android.extensions.add('flutter', [
+                    compileSdkVersion: 34,
+                    minSdkVersion: 21,
+                    targetSdkVersion: 34
+                ])
+            }
+            project.android {
+                compileSdkVersion 34
+                buildToolsVersion "34.0.0"
+                defaultConfig {
+                    minSdkVersion 21
+                    targetSdkVersion 34
+                }
+            }
+        }
+    }
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
         if (project.hasProperty('android')) {
             // Wir injizieren die fehlende "flutter" Extension in jedes Plugin
             if (!project.android.hasProperty('flutter')) {
