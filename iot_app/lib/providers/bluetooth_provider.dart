@@ -1,4 +1,4 @@
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart' hide BluetoothService; // Fix: Versteckt den conflicting Name
 import 'package:riverpod/riverpod.dart';
 import '../services/bluetooth_service.dart';
 import '../models/device.dart';
