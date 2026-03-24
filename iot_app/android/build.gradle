@@ -1,14 +1,3 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10'
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -21,15 +10,14 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 
-// DIESER BLOCK IST DER ENTSCHEIDENDE FIX:
+// KEIN evaluationDependsOn(':app') hier! Das ist die Fehlerquelle.
+
 subprojects {
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
             project.android {
-                // Erzwingt die Versionen für alle Plugins (inkl. flutter_blue_plus)
                 compileSdkVersion 34
                 buildToolsVersion "34.0.0"
-
                 defaultConfig {
                     minSdkVersion 21
                     targetSdkVersion 34
