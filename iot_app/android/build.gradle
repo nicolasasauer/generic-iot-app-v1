@@ -4,7 +4,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.3.0'
+        // Wir nutzen 7.4.2, da 8.1.0 (wie wir gesehen haben) zu neu ist
+        // und 7.3.0 manchmal Probleme mit Flutter 3.24 hat.
+        classpath 'com.android.tools.build:gradle:7.4.2'
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.10'
     }
 }
@@ -20,20 +22,22 @@ rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
-subprojects {
-    project.evaluationDependsOn(':app')
-}
+
+// WICHTIG: Die Zeilen mit 'evaluationDependsOn(":app")' MÜSSEN WEG.
+// Sie verursachen oft den "null object" Fehler bei Plugins.
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 
+// Dieser Block erzwingt die Versionen für alle Plugins (inkl. flutter_blue_plus)
 subprojects {
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
             project.android {
-                // Dies erzwingt die Versionen für ALLE Plugins, 
-                // auch wenn sie diese selbst nicht finden können.
+                if (namespace == null) {
+                    namespace project.group
+                }
                 compileSdkVersion 34
                 buildToolsVersion "34.0.0"
 
