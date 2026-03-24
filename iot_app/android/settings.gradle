@@ -22,9 +22,9 @@ pluginManagement {
 }
 
 plugins {
-    id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
+    id "dev.flutter.flutter-gradle-plugin" apply false // Keine Version hier!
     id "com.android.application" version "7.4.2" apply false
-    id "org.jetbrains.kotlin.android" version "1.9.10" apply false // Hier muss 1.9.10 stehen
+    id "org.jetbrains.kotlin.android" version "1.9.10" apply false
 }
 
 include ":app"
