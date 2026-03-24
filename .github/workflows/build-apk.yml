@@ -39,6 +39,9 @@ jobs:
         working-directory: iot_app
         run: dart run build_runner build --delete-conflicting-outputs
 
+      - name: Create local.properties
+        run: echo "flutter.sdk=$FLUTTER_ROOT" > iot_app/android/local.properties
+
       - name: Build release APK for ARM64 (Galaxy S23)
         working-directory: iot_app
         run: |
