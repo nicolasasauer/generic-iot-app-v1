@@ -16,10 +16,11 @@
     
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
 
-    <application
+        <application
         android:label="IoT App"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@drawable/ic_launcher_foreground"
+        android:theme="@style/LaunchTheme">
         <activity
             android:name=".MainActivity"
             android:exported="true"
