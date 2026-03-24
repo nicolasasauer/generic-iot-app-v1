@@ -272,7 +272,13 @@ For issues and questions:
 - Verify BLE permissions and settings
 - Consult esp32/esp32_README.md for firmware details
 
+## Disclaimer (Vibe-Coding)
+
+Dieses Projekt ist vollstaendig "gevibecoded" ("vibe-coded") entstanden, also mit starker KI-Unterstuetzung bei Architektur, Implementierung und Iteration.
+Trotz funktionierender Builds und Checks kann es fachliche, technische oder sicherheitsrelevante Luecken geben.
+Bitte vor produktivem Einsatz eine gruendliche manuelle Pruefung durchfuehren.
+
 ---
 
 **Version**: 1.0.0  
-**Last Updated**: 2024
+**Last Updated**: 2026
