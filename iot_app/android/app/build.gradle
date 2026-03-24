@@ -24,35 +24,22 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.iot_app"
-    compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
+    
+    // ÄNDERUNG: Nutze direkt die Zahl 34, nicht flutter.compileSdkVersion
+    compileSdkVersion 34 
+    
+    ndkVersion "25.1.8937393" // Oder eine feste Version, falls nötig
 
     defaultConfig {
         applicationId "com.example.iot_app"
+        // ÄNDERUNG: Feste Zahlen nutzen
         minSdkVersion 21
         targetSdkVersion 34
+        
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-
-    buildTypes {
-        release {
-            signingConfig signingConfigs.debug
-        }
-    }
+    // ... restlicher Code
 }
 
 flutter {
