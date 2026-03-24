@@ -12,36 +12,37 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
-}
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode') ?: '1'
+def flutterVersionName = localProperties.getProperty('flutter.versionName') ?: '1.0'
 
 android {
     namespace "com.example.iot_app"
     compileSdkVersion 34
-    
-    ndkVersion "25.1.8937393" // Oder eine feste Version, falls nötig
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
     defaultConfig {
         applicationId "com.example.iot_app"
-        // ÄNDERUNG: Feste Zahlen nutzen
         minSdkVersion 21
         targetSdkVersion 34
-        
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
-    // ... restlicher Code
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug
+        }
+    }
 }
 
 flutter {
     source '../..'
 }
-
-dependencies {}
