@@ -1,3 +1,15 @@
+buildscript {
+    ext.kotlin_version = '1.9.10' // Explizite Version für Plugins
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 allprojects {
     repositories {
         google()
@@ -13,7 +25,6 @@ subprojects {
 subprojects {
     afterEvaluate { project ->
         if (project.hasProperty('android')) {
-            // Fix für flutter_blue_plus (injiziert die 'flutter' Eigenschaft)
             if (!project.android.hasProperty('flutter')) {
                 project.android.extensions.add('flutter', [
                     compileSdkVersion: 34,
