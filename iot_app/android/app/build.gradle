@@ -24,9 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.iot_app"
-    
-    // ÄNDERUNG: Nutze direkt die Zahl 34, nicht flutter.compileSdkVersion
-    compileSdkVersion 34 
+    compileSdkVersion 34
     
     ndkVersion "25.1.8937393" // Oder eine feste Version, falls nötig
 
