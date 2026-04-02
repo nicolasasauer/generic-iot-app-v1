@@ -8,6 +8,10 @@ allprojects {
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
+    // Provide flutter SDK version constants so Flutter plugin subprojects
+    // (e.g. flutter_blue_plus_android) can resolve flutter.compileSdkVersion
+    // inside their android{} blocks before the Flutter Gradle plugin runs.
+    project.ext.flutter = [compileSdkVersion: 34, minSdkVersion: 21, targetSdkVersion: 34]
 }
 subprojects {
     project.evaluationDependsOn(':app')
