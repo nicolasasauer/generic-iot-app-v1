@@ -2,6 +2,13 @@
 
 A comprehensive Flutter Android application for connecting to ESP32 devices via Bluetooth Low Energy (BLE), featuring modular dashboard widgets, real-time sensor data logging, and visualization.
 
+## 📸 Screenshots
+
+| Dashboard | Device Scan | Data Log | Settings |
+|:---------:|:-----------:|:--------:|:--------:|
+| ![Dashboard](screenshots/dashboard.svg) | ![BLE Device Scan](screenshots/scan.svg) | ![Data Log](screenshots/data_log.svg) | ![Settings](screenshots/settings.svg) |
+| Gauge, chart, value & toggle widgets on the live dashboard | Scan for nearby ESP32 BLE devices and connect | Real-time ring-buffer log with CSV export | Sensor configuration and app preferences |
+
 ## 🌟 Features
 
 ### Flutter App
