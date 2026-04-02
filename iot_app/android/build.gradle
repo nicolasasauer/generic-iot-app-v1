@@ -13,6 +13,21 @@ subprojects {
     project.evaluationDependsOn(':app')
 }
 
+// Flutter plugin library projects reference `flutter.compileSdkVersion` etc. inside their
+// `android { }` block. Flutter's FlutterPlugin only registers the `flutter` extension on the
+// app project, so we provide a stub for every other subproject to prevent
+// "Could not get unknown property 'flutter'" build failures (e.g. flutter_blue_plus_android).
+subprojects {
+    if (project.name != 'app') {
+        project.ext.flutter = [
+            compileSdkVersion: 34,
+            minSdkVersion    : 21,
+            targetSdkVersion : 34,
+            ndkVersion       : '23.1.7779620',
+        ]
+    }
+}
+
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
