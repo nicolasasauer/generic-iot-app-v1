@@ -11,6 +11,7 @@ subprojects {
     // Provide flutter SDK version constants so Flutter plugin subprojects
     // (e.g. flutter_blue_plus_android) can resolve flutter.compileSdkVersion
     // inside their android{} blocks before the Flutter Gradle plugin runs.
+    // Keep these values in sync with the android{} block in app/build.gradle.
     project.ext.flutter = [compileSdkVersion: 34, minSdkVersion: 21, targetSdkVersion: 34]
 }
 subprojects {
