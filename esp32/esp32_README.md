@@ -1,15 +1,15 @@
 # ESP32 IoT Firmware
 
 This directory contains the ESP32 firmware for the IoT Dashboard application.
+The project uses **PlatformIO** for building and flashing.
 
 ## Features
 
 - BLE GATT Server with Nordic UART Service
 - Multi-sensor support (Analog, Digital, I2C, SPI, UART)
-- Ring buffer for data logging (1000 entries)
+- Ring buffer for offline data logging (100 entries, auto-sent on reconnect)
 - JSON protocol for data transmission
-- Configurable sampling rates
-- Auto-send buffered data on connection
+- Configurable sampling rates via BLE commands
 - LED status indicator
 
 ## Hardware Requirements
@@ -35,7 +35,6 @@ This directory contains the ESP32 firmware for the IoT Dashboard application.
 - **SPI_MOSI**: GPIO 23
 - **SPI_MISO**: GPIO 19
 - **SPI_SCK**: GPIO 18
-- **SPI_CS**: GPIO 5
 
 ## Wiring Examples
 
@@ -60,41 +59,39 @@ BME280 SDA  -> ESP32 GPIO 21
 BME280 SCL  -> ESP32 GPIO 22
 ```
 
-## Installation
+## Installation (PlatformIO)
 
-### 1. Install Arduino IDE
-Download from: https://www.arduino.cc/en/software
+### 1. Install PlatformIO
+Install the [PlatformIO IDE extension](https://platformio.org/install/ide?install=vscode)
+for VS Code, or install the PlatformIO Core CLI:
+```
+pip install platformio
+```
 
-### 2. Install ESP32 Board Support
-1. Open Arduino IDE
-2. Go to `File -> Preferences`
-3. Add to "Additional Board Manager URLs":
-   ```
-   https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-   ```
-4. Go to `Tools -> Board -> Board Manager`
-5. Search for "ESP32" and install "esp32 by Espressif Systems"
+### 2. Open the project
+Open the `esp32/firmware/` folder in VS Code with the PlatformIO extension, or
+navigate to it in a terminal.
 
-### 3. Install Required Libraries
-Go to `Sketch -> Include Library -> Manage Libraries` and install:
-- **ArduinoJson** by Benoit Blanchon (v6.x)
-- **ESP32 BLE Arduino** (included with ESP32 board support)
+### 3. Build & Upload
+```bash
+# Build
+pio run
 
-Optional (for I2C sensors):
-- **Adafruit BME280 Library**
-- **Adafruit Unified Sensor**
+# Build and upload (ESP32 must be connected via USB)
+pio run --target upload
 
-### 4. Configure Board
-1. Connect ESP32 via USB
-2. Select `Tools -> Board -> ESP32 Arduino -> ESP32 Dev Module`
-3. Select correct port: `Tools -> Port -> COMx` (Windows) or `/dev/ttyUSBx` (Linux)
-4. Set upload speed: `Tools -> Upload Speed -> 115200`
+# Open serial monitor (115200 baud)
+pio device monitor
+```
 
-### 5. Upload Firmware
-1. Open `iot_firmware.ino`
-2. Click Upload button (→)
-3. Wait for compilation and upload to complete
-4. Open Serial Monitor (`Tools -> Serial Monitor`) at 115200 baud
+All required libraries (`ArduinoJson`) are declared in `platformio.ini` and are
+downloaded automatically on the first build.
+
+Optional — for I2C sensors (add to `lib_deps` in `platformio.ini`):
+```
+adafruit/Adafruit BME280 Library @ ^2.2.4
+adafruit/Adafruit Unified Sensor @ ^1.1.14
+```
 
 ## Protocol
 
@@ -145,12 +142,12 @@ JSON commands for configuration and control:
 
 ### Adding New Sensors
 
-Edit the `sensors[]` array in `iot_firmware.ino`:
+Edit the `sensors[]` array in `src/main.cpp`:
 
 ```cpp
 SensorConfig sensors[] = {
-  {"temp", "analog", ANALOG_PIN_1, 1000, true},
-  {"humidity", "i2c", 0, 2000, true},  // Add your sensor
+  {"temp",     "analog", ANALOG_PIN_1, 1000, true},
+  {"humidity", "i2c",    0,            2000, true},  // Add your sensor
 };
 ```
 
@@ -161,11 +158,16 @@ Change the `samplingRateMs` value in sensor config (in milliseconds):
 {"temp", "analog", ANALOG_PIN_1, 500, true},  // Sample every 500ms
 ```
 
+You can also update it live from the app:
+```json
+{"cmd":"config","sensor":"temp","samplingRate":500}
+```
+
 ### Adjusting Buffer Size
 
-Modify the ring buffer size in the declaration:
+Modify the ring buffer size in `src/main.cpp` (line declaring `dataBuffer`):
 ```cpp
-RingBuffer<String, 2000> dataBuffer;  // Increase to 2000 entries
+RingBuffer<String, 200> dataBuffer;  // Increase to 200 entries
 ```
 
 ## Troubleshooting

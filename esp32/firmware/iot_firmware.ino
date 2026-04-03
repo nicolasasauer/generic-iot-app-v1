@@ -1,4 +1,8 @@
 /*
+ * DEPRECATED — This Arduino IDE sketch has been superseded by the PlatformIO
+ * project in src/main.cpp.  Use PlatformIO to build and flash the firmware.
+ * See esp32_README.md for instructions.
+ *
  * ESP32 IoT Firmware with BLE UART Service
  * Supports multiple sensor types: UART, I2C, SPI, Analog, Digital
  * Implements ring buffer for data logging
